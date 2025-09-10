@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}{{ 'Edit Quiz' if edit else 'Add Quiz' }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h4 class="card-title">{{ '✏️ Edit Quiz' if edit else '📝 Add Quiz' }}</h4>
+            <form method="POST">
+                {{ form.hidden_tag() }}
+
+                <!-- Module selection -->
+                <div class="mb-3">
+                    <label for="module" class="form-label">Module</label>
+                    {% if modules %}
+                    <select class="form-select" id="module" name="module_id" required
+                        style="color: black; background-color: white;">
+                        <option value="">Select Module</option>
+                        {% for module in modules %}
+                            <option value="{{ module.id }}"
+                                {% if edit and quiz.module_id == module.id %}selected{% endif %}>
+                                {{ module.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    {% else %}
+                        <p class="text-danger">No modules available. Please create a module first.</p>
+                    {% endif %}
+                </div>
+
+                <!-- Quiz question -->
+                <div class="mb-3">
+                    {{ form.question.label(class="form-label") }}
+                    {{ form.question(class="form-control", rows=3, 
+                        value=form.question.data if form.question.data else (quiz.question if edit else ""),
+                        placeholder="Enter the quiz question here") }}
+                    {% if form.question.errors %}
+                        <div class="text-danger small">
+                            {% for error in form.question.errors %}{{ error }}{% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Quiz options -->
+                <div class="mb-3">
+                    {{ form.options.label(class="form-label") }}
+                    {{ form.options(class="form-control", rows=3,
+                        value=form.options.data if form.options.data else (quiz.options if edit else ""),
+                        placeholder='["Option A", "Option B", "Option C"]') }}
+                    <small class="form-text text-muted">
+                        Enter as JSON list, e.g. ["Option A", "Option B", "Option C"]
+                    </small>
+                    {% if form.options.errors %}
+                        <div class="text-danger small">
+                            {% for error in form.options.errors %}{{ error }}{% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Correct answer -->
+                <div class="mb-3">
+                    {{ form.correct_answer.label(class="form-label") }}
+                    {{ form.correct_answer(class="form-control",
+                        value=form.correct_answer.data if form.correct_answer.data else (quiz.correct_answer if edit else ""),
+                        placeholder="Enter the correct answer exactly as in options") }}
+                    {% if form.correct_answer.errors %}
+                        <div class="text-danger small">
+                            {% for error in form.correct_answer.errors %}{{ error }}{% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Points -->
+                <div class="mb-3">
+                    {{ form.points.label(class="form-label") }}
+                    {{ form.points(class="form-control",
+                        value=form.points.data if form.points.data else (quiz.points if edit else 10),
+                        placeholder="Enter points for this quiz") }}
+                    {% if form.points.errors %}
+                        <div class="text-danger small">
+                            {% for error in form.points.errors %}{{ error }}{% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <button type="submit" class="btn btn-success">{{ 'Update Quiz' if edit else 'Save Quiz' }}</button>
+                <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

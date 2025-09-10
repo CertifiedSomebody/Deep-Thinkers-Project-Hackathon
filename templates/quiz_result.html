@@ -1,0 +1,24 @@
+<!-- quiz_result.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Quiz Result</title>
+</head>
+<body>
+    <h1>Quiz Completed ✅</h1>
+
+    <p>You scored <strong>{{ score }}</strong> out of <strong>{{ total }}</strong>.</p>
+
+    {% if score == total %}
+        <p style="color: green;">🎉 Perfect Score! Well done!</p>
+    {% elif score > (total/2) %}
+        <p style="color: blue;">👍 Great job! You passed the quiz.</p>
+    {% else %}
+        <p style="color: red;">😢 Keep practicing! You can do better next time.</p>
+    {% endif %}
+
+    <br>
+    <a href="{{ url_for('dashboard') }}">⬅ Back to Dashboard</a>
+</body>
+</html>
