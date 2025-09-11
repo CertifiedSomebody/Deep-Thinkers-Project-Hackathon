@@ -29,6 +29,10 @@
                         <li class="nav-item">
                             <a class="nav-link {% if request.endpoint == 'forum' %}active{% endif %}" href="{{ url_for('forum') }}">Forum</a>
                         </li>
+                        <!-- New Play Game link -->
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.endpoint == 'game' %}active{% endif %}" href="{{ url_for('game') }}">🎮 Play Game</a>
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
                         </li>
@@ -63,7 +67,6 @@
 
     <!-- Footer -->
     <footer class="bg-success text-white text-center py-3 mt-auto">
-        <!-- Use now() safely assuming it's passed via context processor in app.py -->
         <small>🌱 EcoQuest - Learn. Act. Earn Points. © {{ now().year }}</small>
     </footer>
 
@@ -73,3 +76,4 @@
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 </html>
+

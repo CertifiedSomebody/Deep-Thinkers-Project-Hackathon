@@ -6,7 +6,8 @@
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2>👋 Hello, {{ current_user.name }}</h2>
     <div>
-        <span class="badge bg-success fs-6">Eco Points: {{ current_user.eco_points }}</span>
+        <span class="badge bg-success fs-6 me-2">Eco Points: {{ current_user.eco_points }}</span>
+        <span class="badge bg-warning text-dark fs-6">Green Coins: {{ current_user.green_coins }}</span>
     </div>
 </div>
 
@@ -98,3 +99,4 @@
 </div>
 
 {% endblock %}
+

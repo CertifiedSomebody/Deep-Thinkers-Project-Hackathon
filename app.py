@@ -24,9 +24,11 @@ from forms import (
     ForumForm,
     CommentForm,
     ModuleForm,
+    GameForm,
 )
 from config import Config
-
+from flask_migrate import Migrate
+from models import db
 # -----------------------------
 # FLASK APP SETUP
 # -----------------------------
@@ -35,6 +37,7 @@ app.config.from_object(Config)
 
 # Initialize DB
 db.init_app(app)
+migrate = Migrate(app, db)
 
 # Login manager setup
 login_manager = LoginManager(app)
@@ -481,6 +484,36 @@ def delete_quiz(quiz_id):
     db.session.commit()
     flash("Quiz deleted successfully!", "success")
     return redirect(url_for("dashboard"))
+
+# ---------- MINI GAME ----------
+@app.route("/game", methods=["GET"])
+@login_required
+def game():
+    return render_template("game.html", coins=current_user.green_coins or 0)
+
+
+@app.route("/mini_game/add_points", methods=["POST"])
+@login_required
+def mini_game_add_points():
+    if current_user.role != "student":
+        flash("Only students can play the mini game.", "danger")
+        return redirect(url_for("dashboard"))
+
+    form = GameForm()
+    if form.validate_on_submit():
+        try:
+            coins = int(form.coins.data)
+        except (TypeError, ValueError):
+            coins = current_user.green_coins
+
+        current_user.green_coins = coins
+        db.session.commit()
+        flash(f"✅ Your progress has been saved! You now have {coins} Green Coins.", "success")
+    else:
+        flash("⚠️ Could not save progress (invalid form submission).", "danger")
+
+    return redirect(url_for("game"))
+
 
 # -----------------------------
 # MAIN

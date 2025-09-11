@@ -14,10 +14,12 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(200), nullable=False)
     role = db.Column(db.String(20), default="student")
     eco_points = db.Column(db.Integer, default=0)
+    green_coins = db.Column(db.Integer, default=0)   # new sub-currency
 
     # Relationships
     submissions = db.relationship("Submission", backref="user", lazy=True)
     forum_posts = db.relationship("ForumPost", backref="author", lazy=True)
+    comments = db.relationship("Comment", backref="user", lazy=True)
 
     def __repr__(self):
         return f"<User {self.name} ({self.email})>"
@@ -31,7 +33,6 @@ class Module(db.Model):
     description = db.Column(db.Text)
     content = db.Column(db.Text)
 
-    # Relationships
     quizzes = db.relationship("Quiz", backref="module", lazy=True)
 
     def __repr__(self):
@@ -60,7 +61,6 @@ class Challenge(db.Model):
     description = db.Column(db.Text)
     points = db.Column(db.Integer, default=20)
 
-    # Relationships
     submissions = db.relationship("Submission", backref="challenge", lazy=True)
 
     def __repr__(self):
@@ -93,15 +93,20 @@ class ForumPost(db.Model):
     def __repr__(self):
         return f"<ForumPost {self.title[:20]}...>"
 
+
 class Comment(db.Model):
+    __tablename__ = "comment"
+    
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.Text, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
-    # Foreign keys
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
     post_id = db.Column(db.Integer, db.ForeignKey("forum_post.id"), nullable=False)
 
     # Relationships
-    user = db.relationship("User", backref="comments", lazy=True)
     post = db.relationship("ForumPost", backref="comments", lazy=True)
+
+    def __repr__(self):
+        return f"<Comment {self.content[:20]}...>"
+

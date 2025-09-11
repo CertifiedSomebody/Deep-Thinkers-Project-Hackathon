@@ -65,3 +65,10 @@ class ChallengeSubmissionForm(FlaskForm):
         ]
     )
     submit = SubmitField("Submit Challenge")
+
+# near the other forms in forms.py
+from wtforms import HiddenField
+
+class GameForm(FlaskForm):
+    coins = HiddenField("Coins")
+    submit = SubmitField("Save Progress")
