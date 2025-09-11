@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}{{ "Edit Module" if edit else "Add Module" }}{% endblock %}
+
+{% block content %}
+<h3>{{ "Edit Module" if edit else "Add Module" }}</h3>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <div class="mb-3">
+        {{ form.title.label(class="form-label") }}
+        {{ form.title(class="form-control") }}
+    </div>
+    <div class="mb-3">
+        {{ form.description.label(class="form-label") }}
+        {{ form.description(class="form-control") }}
+    </div>
+    <div class="mb-3">
+        {{ form.content.label(class="form-label") }}
+        {{ form.content(class="form-control") }}
+    </div>
+    <button type="submit" class="btn btn-success">{{ "Update" if edit else "Add" }}</button>
+    <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}

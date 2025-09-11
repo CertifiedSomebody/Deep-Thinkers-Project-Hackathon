@@ -1,0 +1,50 @@
+<!-- templates/add_challenge.html -->
+{% extends "base.html" %}
+
+{% block title %}{{ 'Edit Challenge' if edit else 'Add Challenge' }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-body">
+            <h4 class="card-title">{{ '✏️ Edit Challenge' if edit else '🌱 Add Challenge' }}</h4>
+            <form method="POST">
+                {{ form.hidden_tag() }}
+
+                <div class="mb-3">
+                    {{ form.title.label(class="form-label") }}
+                    {{ form.title(class="form-control", placeholder="Enter challenge title") }}
+                    {% if form.title.errors %}
+                        <div class="text-danger small">
+                            {% for error in form.title.errors %}{{ error }}{% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    {{ form.description.label(class="form-label") }}
+                    {{ form.description(class="form-control", rows=3, placeholder="Describe the challenge") }}
+                    {% if form.description.errors %}
+                        <div class="text-danger small">
+                            {% for error in form.description.errors %}{{ error }}{% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    {{ form.points.label(class="form-label") }}
+                    {{ form.points(class="form-control", placeholder="Points awarded for completing this challenge") }}
+                    {% if form.points.errors %}
+                        <div class="text-danger small">
+                            {% for error in form.points.errors %}{{ error }}{% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <button type="submit" class="btn btn-success">{{ 'Update Challenge' if edit else 'Save Challenge' }}</button>
+                <a href="{{ url_for('dashboard') }}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

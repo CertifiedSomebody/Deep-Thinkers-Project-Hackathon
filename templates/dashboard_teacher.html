@@ -1,0 +1,113 @@
+<!-- templates/dashboard_teacher.html -->
+{% extends "base.html" %}
+
+{% block title %}Teacher Dashboard{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>👩‍🏫 Hello, {{ current_user.name }}</h2>
+    <div>
+        <span class="badge bg-success fs-6">Role: Teacher</span>
+    </div>
+</div>
+
+<!-- Modules Section -->
+<h4>📘 Modules</h4>
+<div class="mb-4">
+    <a href="{{ url_for('create_module') }}" class="btn btn-success btn-sm mb-2">+ Add New Module</a>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for module in modules %}
+        <div class="col">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">{{ module.title }}</h5>
+                    <p class="card-text">
+                        {{ module.description[:120] }}{% if module.description|length > 120 %}...{% endif %}
+                    </p>
+                    <a href="{{ url_for('edit_module', module_id=module.id) }}" class="btn btn-outline-success btn-sm">Edit</a>
+                    <a href="{{ url_for('delete_module', module_id=module.id) }}" 
+                       class="btn btn-outline-danger btn-sm"
+                       onclick="return confirm('Are you sure you want to delete this module?')">Delete</a>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <p>No modules added yet.</p>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Quizzes Section -->
+<h4>📝 Quizzes</h4>
+<div class="mb-4">
+    <a href="{{ url_for('create_quiz') }}" class="btn btn-success btn-sm mb-2">+ Add New Quiz</a>
+    <table class="table table-striped align-middle">
+        <thead class="table-success">
+            <tr>
+                <th>Module</th>
+                <th>Question</th>
+                <th>Points</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set has_quizzes = false %}
+            {% for module in modules %}
+                {% for quiz in module.quizzes %}
+                    {% set has_quizzes = true %}
+                    <tr>
+                        <td>{{ module.title }}</td>
+                        <td>{{ quiz.question[:50] }}{% if quiz.question|length > 50 %}...{% endif %}</td>
+                        <td>{{ quiz.points }}</td>
+                        <td>
+                            <a href="{{ url_for('edit_quiz', quiz_id=quiz.id) }}" class="btn btn-sm btn-outline-success">Edit</a>
+                            <a href="{{ url_for('delete_quiz', quiz_id=quiz.id) }}" 
+                               class="btn btn-sm btn-outline-danger"
+                               onclick="return confirm('Are you sure you want to delete this quiz?')">Delete</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endfor %}
+            {% if not has_quizzes %}
+            <tr><td colspan="4">No quizzes added yet.</td></tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Challenges Section -->
+<h4>🌱 Challenges</h4>
+<div class="mb-4">
+    <a href="{{ url_for('create_challenge') }}" class="btn btn-success btn-sm mb-2">+ Add New Challenge</a>
+    <table class="table table-striped align-middle">
+        <thead class="table-success">
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Points</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if challenges %}
+                {% for challenge in challenges %}
+                <tr>
+                    <td>{{ challenge.title }}</td>
+                    <td>{{ challenge.description[:50] }}{% if challenge.description|length > 50 %}...{% endif %}</td>
+                    <td>{{ challenge.points }}</td>
+                    <td>
+                        <a href="{{ url_for('edit_challenge', challenge_id=challenge.id) }}" class="btn btn-sm btn-outline-success">Edit</a>
+                        <a href="{{ url_for('delete_challenge', challenge_id=challenge.id) }}" 
+                           class="btn btn-sm btn-outline-danger"
+                           onclick="return confirm('Are you sure you want to delete this challenge?')">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr><td colspan="4">No challenges added yet.</td></tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}

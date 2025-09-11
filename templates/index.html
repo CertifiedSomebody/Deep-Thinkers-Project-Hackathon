@@ -1,0 +1,79 @@
+<!-- templates/index.html -->
+{% extends "base.html" %}
+
+{% block title %}EcoQuest - Home{% endblock %}
+
+{% block content %}
+<div class="text-center mb-5">
+    <h1 class="fw-bold">🌍 Welcome to EcoQuest</h1>
+    <p class="lead">A gamified platform to learn, act, and protect our planet.</p>
+    {% if not current_user.is_authenticated %}
+        <a href="{{ url_for('register') }}" class="btn btn-success btn-lg">Get Started</a>
+    {% endif %}
+</div>
+
+<!-- Learning Modules -->
+<h2 class="mb-3">📘 Eco-Learning Modules</h2>
+<div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+    {% for module in modules %}
+    <div class="col">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">{{ module.title }}</h5>
+                <p class="card-text">{{ module.description[:100] }}...</p>
+                <a href="{{ url_for('dashboard') }}" class="btn btn-outline-success btn-sm">Start Module</a>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <p>No modules available yet.</p>
+    {% endfor %}
+</div>
+
+<!-- Challenges -->
+<h2 class="mb-3">🌱 Current Eco-Challenges</h2>
+<div class="row row-cols-1 row-cols-md-2 g-4 mb-5">
+    {% for challenge in challenges %}
+    <div class="col">
+        <div class="card border-success h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">{{ challenge.title }}</h5>
+                <p class="card-text">{{ challenge.description[:120] }}...</p>
+                {% if current_user.is_authenticated %}
+                    <a href="{{ url_for('dashboard') }}" class="btn btn-success btn-sm">Take Challenge</a>
+                {% else %}
+                    <a href="{{ url_for('login') }}" class="btn btn-outline-secondary btn-sm">Login to Join</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <p>No challenges yet.</p>
+    {% endfor %}
+</div>
+
+<!-- Leaderboard -->
+<h2 class="mb-3">🏆 Top Eco Heroes</h2>
+<div class="table-responsive">
+    <table class="table table-striped align-middle">
+        <thead class="table-success">
+            <tr>
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Eco Points</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in top_users %}
+            <tr>
+                <td><strong>#{{ loop.index }}</strong></td>
+                <td>{{ user.name }}</td>
+                <td>{{ user.eco_points }}</td>
+            </tr>
+            {% else %}
+            <tr><td colspan="3">No users ranked yet.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

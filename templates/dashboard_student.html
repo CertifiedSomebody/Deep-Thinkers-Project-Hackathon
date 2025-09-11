@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}Student Dashboard{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>👋 Hello, {{ current_user.name }}</h2>
+    <div>
+        <span class="badge bg-success fs-6">Eco Points: {{ current_user.eco_points }}</span>
+    </div>
+</div>
+
+<!-- Badges -->
+<h4>🏅 Badges</h4>
+<div class="mb-4">
+    {% set badges = [] %}
+    {% if current_user.eco_points >= 100 %} {% set _ = badges.append("Eco Warrior") %} {% endif %}
+    {% if current_user.eco_points >= 200 %} {% set _ = badges.append("Green Hero") %} {% endif %}
+    {% if current_user.eco_points >= 500 %} {% set _ = badges.append("Planet Protector") %} {% endif %}
+
+    {% if badges %}
+        {% for badge in badges %}
+            <span class="badge bg-success me-2">{{ badge }}</span>
+        {% endfor %}
+    {% else %}
+        <small>No badges earned yet. Start completing quizzes and challenges!</small>
+    {% endif %}
+</div>
+
+<!-- Learning Modules -->
+<h4>📘 Learning Modules</h4>
+<div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+    {% for module in modules %}
+    <div class="col">
+        <div class="card h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">{{ module.title }}</h5>
+                <p class="card-text">
+                    {{ module.description[:120] }}{% if module.description|length > 120 %}...{% endif %}
+                </p>
+                <a href="{{ url_for('module_detail', module_id=module.id) }}" class="btn btn-outline-success btn-sm">
+                    Start Module
+                </a>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <p>No modules available yet.</p>
+    {% endfor %}
+</div>
+
+<!-- Quizzes Section -->
+<h4>📝 Quizzes</h4>
+<div class="row row-cols-1 row-cols-md-2 g-4 mb-5">
+    {% set has_quizzes = false %}
+    {% for module in modules %}
+        {% for quiz in module.quizzes %}
+            {% set has_quizzes = true %}
+            <div class="col">
+                <div class="card border-info h-100 shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ quiz.question[:50] }}{% if quiz.question|length > 50 %}...{% endif %}</h5>
+                        <p class="card-text"><strong>Module:</strong> {{ module.title }}</p>
+                        <p class="card-text"><strong>Points:</strong> {{ quiz.points }}</p>
+                        <a href="{{ url_for('quiz', quiz_id=quiz.id) }}" class="btn btn-info btn-sm">
+                            Take Quiz
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% if not has_quizzes %}
+        <p>No quizzes available yet.</p>
+    {% endif %}
+</div>
+
+<!-- Current Challenges -->
+<h4>🌱 Current Challenges</h4>
+<div class="row row-cols-1 row-cols-md-2 g-4 mb-5">
+    {% for challenge in challenges %}
+    <div class="col">
+        <div class="card border-success h-100 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">{{ challenge.title }}</h5>
+                <p class="card-text">
+                    {{ challenge.description[:120] }}{% if challenge.description|length > 120 %}...{% endif %}
+                </p>
+                <a href="{{ url_for('challenge', challenge_id=challenge.id) }}" class="btn btn-success btn-sm">
+                    Submit Proof
+                </a>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <p>No challenges available yet.</p>
+    {% endfor %}
+</div>
+
+{% endblock %}

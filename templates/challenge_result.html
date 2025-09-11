@@ -1,0 +1,20 @@
+<!-- challenge_result.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Challenge Result</title>
+</head>
+<body>
+    <h1>Challenge Submission Result</h1>
+
+    {% if success %}
+        <p style="color: green;">✅ Your solution has been submitted successfully!</p>
+    {% else %}
+        <p style="color: red;">❌ There was an issue submitting your solution. Please try again.</p>
+    {% endif %}
+
+    <br>
+    <a href="{% url 'challenge_list' %}">⬅ Back to Challenges</a>
+</body>
+</html>

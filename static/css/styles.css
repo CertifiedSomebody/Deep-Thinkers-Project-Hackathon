@@ -1,0 +1,105 @@
+/* =========================
+   EcoQuest Main Styles
+   ========================= */
+
+/* Body */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa; /* light gray background */
+    color: #333;
+}
+
+/* Navbar */
+.navbar-brand {
+    font-size: 1.5rem;
+}
+
+.navbar-nav .nav-link {
+    font-weight: 500;
+}
+
+/* Cards */
+.card {
+    border-radius: 0.75rem;
+}
+
+.card-title {
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+/* Buttons */
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+.btn-outline-success {
+    color: #28a745;
+    border-color: #28a745;
+}
+
+.btn-outline-success:hover {
+    background-color: #28a745;
+    color: #fff;
+}
+
+/* Badges */
+.badge {
+    font-size: 0.9rem;
+}
+
+/* Lists */
+.list-group-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Tables */
+.table {
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+.table thead th {
+    background-color: #28a745;
+    color: #fff;
+}
+
+/* Alerts */
+.alert {
+    border-radius: 0.5rem;
+}
+
+/* Misc */
+.text-muted {
+    font-size: 0.875rem;
+}
+
+h2, h4, h5 {
+    font-weight: 600;
+}
+
+/* Form controls */
+.form-control, .form-select {
+    color: #000 !important;            /* Black text */
+    background-color: #fff !important; /* White background */
+}
+
+/* For options inside select */
+.form-select option {
+    color: #000 !important;            /* Black text in dropdown */
+    background-color: #fff !important; /* White background for options */
+}
+
+/* Optional: focus/hover states */
+.form-control:focus, .form-select:focus {
+    border-color: #28a745;
+    box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25);
+}

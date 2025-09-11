@@ -1,0 +1,25 @@
+<!-- challenge_detail.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ challenge.title }}</title>
+</head>
+<body>
+    <h1>{{ challenge.title }}</h1>
+    <p>{{ challenge.description }}</p>
+
+    <p><strong>Difficulty:</strong> {{ challenge.difficulty }}</p>
+
+    <h3>Submit Your Solution</h3>
+    <form method="post">
+        {% csrf_token %}
+        <textarea name="solution" rows="5" cols="40" placeholder="Write your solution here..."></textarea>
+        <br><br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <br>
+    <a href="{% url 'challenge_list' %}">⬅ Back to Challenges</a>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!-- templates/forum_post.html -->
+{% extends "base.html" %}
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <h3 class="card-title">{{ post.title }}</h3>
+        <p class="card-text">{{ post.content }}</p>
+        <small class="text-muted">by {{ post.user.name if post.user else "Unknown" }} on {{ post.created_at.strftime("%b %d, %Y %H:%M") }}</small>
+    </div>
+</div>
+
+<!-- Comment form -->
+<h5>💬 Add a Comment</h5>
+<form method="POST">
+    {{ form.hidden_tag() }}
+    <div class="mb-3">
+        {{ form.content.label(class="form-label") }}
+        {{ form.content(class="form-control") }}
+    </div>
+    {{ form.submit(class="btn btn-success") }}
+</form>
+
+<hr>
+
+<!-- Existing comments -->
+<h5>Comments</h5>
+{% for comment in post.comments %}
+    <div class="card mb-2 shadow-sm">
+        <div class="card-body">
+            <p class="mb-1">{{ comment.content }}</p>
+            <small class="text-muted">by {{ comment.user.name if comment.user else "Anonymous" }} on {{ comment.created_at.strftime("%b %d, %Y %H:%M") }}</small>
+        </div>
+    </div>
+{% else %}
+    <p>No comments yet. Be the first to reply!</p>
+{% endfor %}
+{% endblock %}

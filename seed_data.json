@@ -1,0 +1,72 @@
+{
+  "users": [
+    {
+      "name": "Admin User",
+      "email": "admin@ecoquest.com",
+      "password": "admin123",
+      "role": "admin",
+      "eco_points": 0
+    },
+    {
+      "name": "Teacher User",
+      "email": "teacher@ecoquest.com",
+      "password": "teacher123",
+      "role": "teacher",
+      "eco_points": 0
+    },
+    {
+      "name": "Alice",
+      "email": "alice@ecoquest.com",
+      "password": "student123",
+      "role": "student",
+      "eco_points": 50
+    },
+    {
+      "name": "Bob",
+      "email": "bob@ecoquest.com",
+      "password": "student123",
+      "role": "student",
+      "eco_points": 75
+    }
+  ],
+  "modules": [
+    {
+      "title": "Introduction to Recycling",
+      "description": "Learn the basics of recycling and waste management."
+    },
+    {
+      "title": "Water Conservation",
+      "description": "Understand how to save water in everyday life."
+    },
+    {
+      "title": "Energy Efficiency",
+      "description": "Learn tips to reduce energy consumption."
+    }
+  ],
+  "quizzes": [
+    {
+      "title": "Recycling Quiz",
+      "question": "Which material can be recycled?",
+      "correct_answer": "Plastic",
+      "points": 10
+    },
+    {
+      "title": "Water Quiz",
+      "question": "Which of these saves water?",
+      "correct_answer": "Fixing leaks",
+      "points": 10
+    }
+  ],
+  "challenges": [
+    {
+      "title": "Collect 5 Plastic Bottles",
+      "description": "Collect 5 plastic bottles and upload a photo as proof.",
+      "points": 20
+    },
+    {
+      "title": "Turn Off Unused Lights",
+      "description": "Turn off lights in empty rooms and upload proof.",
+      "points": 15
+    }
+  ]
+}
